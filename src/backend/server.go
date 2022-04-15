@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -20,8 +21,17 @@ func save(c echo.Context) error {
 
 func match(c echo.Context) error {
 
-	// fmt.Println(("your mom gay"))
+	// fmt.Println(("your mom gay"))~
 	return c.String(http.StatusOK, "Hello, World!")
+}
+
+func main() {
+	text := "AABAACAADAABAABA"
+	pattern := "AABA"
+	BM_out := BMAlgo(text, pattern)
+	fmt.Println("Using BM, pattern found", len(BM_out), "times")
+	KMP_algo := KMPAlgo(text, pattern)
+	fmt.Println("Using KMP, pattern found", len(KMP_algo), "times")
 }
 
 // func main() {
@@ -29,7 +39,7 @@ func match(c echo.Context) error {
 // 	e := echo.New()
 // 	e.GET("/", func(c echo.Context) error {
 // 		return c.String(http.StatusOK, "Hello, World!")
-// 	})
+// 	})~
 
 // 	// routing:
 // 	e.GET("/users/:id", getUser)

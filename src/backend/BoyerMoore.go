@@ -22,13 +22,12 @@ func buildLast(pattern string) [128]int {
 	return last
 }
 
-func algo(text string, pattern string) []int {
+func BMAlgo(text string, pattern string) []int {
 	out := make([]int, 0)
 	last := buildLast(pattern)
-	dna_chain := text
-	fmt.Println("DNA Chain = ", dna_chain)
-	fmt.Println("Pattern = ", pattern)
-	text_len := len(dna_chain)
+	fmt.Println("Text: ", text)
+	fmt.Println("Pattern: ", pattern)
+	text_len := len(text)
 	pattern_len := len(pattern)
 
 	shift := 0
@@ -50,10 +49,4 @@ func algo(text string, pattern string) []int {
 		}
 	}
 	return out
-}
-func main() {
-	text := "AABAACAADAABAABA"
-	pattern := "AABA"
-	out := algo(text, pattern)
-	fmt.Println("Pattern found", len(out), "times")
 }
