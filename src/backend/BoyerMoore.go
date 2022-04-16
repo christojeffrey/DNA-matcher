@@ -11,6 +11,17 @@ func max(a, b int) int {
 	return a
 }
 
+func LCS(text string, pattern string, text_len int, pattern_len int) int {
+	if text_len == 0 || pattern_len == 0 {
+		return 0
+	}
+	if text[text_len-1] == pattern[pattern_len-1] {
+		return 1 + LCS(text, pattern, text_len-1, pattern_len-1)
+	} else {
+		return max(LCS(text, pattern, text_len-1, pattern_len), LCS(text, pattern, text_len, pattern_len-1))
+	}
+}
+
 func buildLast(pattern string) [128]int {
 	last := [128]int{}
 	for i := 0; i < 128; i++ {
