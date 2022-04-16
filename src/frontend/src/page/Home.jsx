@@ -1,9 +1,20 @@
-import { Box, Center, Flex, Button } from "@chakra-ui/react";
+
 import { DNAContext } from "../component/Provider";
-import { clean, canBeCleaned } from "../util/sanitize";
+import { canBeCleaned } from "../util/sanitize";
 import { useEffect, useContext } from "react";
 import Navigation from "../component/navigation";
 import axios from 'axios'
+import { 
+  Box, 
+  Center, 
+  Flex, 
+  Button, 
+  Input,
+  Stack,
+  Text,
+  RadioGroup,
+  Radio
+} from "@chakra-ui/react";
 
 const Home = () => {
   const dnaCtx = useContext(DNAContext);
@@ -12,8 +23,10 @@ const Home = () => {
 
   const upload = () => {
     const data = new FormData();
+    data.append('username', dnaCtx.Username)
+    data.append('disease', dnaCtx.Disease)
     data.append('text', dnaCtx.Text)
-    data.append('pattern', dnaCtx.pattern)
+    data.append('method', dnaCtx.Method)
 
     axios.post("http://localhost:1323/api/match", data, {
       responseType: 'json',
@@ -23,8 +36,9 @@ const Home = () => {
     })
     .then(res => {
       dnaCtx.setLoading(false)
-      console.log("YOUR MOM HAS SENT A RESPONSE")
-      console.log(res["data"]["found"]);
+      console.log(res["data"])
+      var response = res["data"]
+      dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + response["found"] + " - " + response["similarity"] + "%")
       console.log("Pattern found at: ", res["data"]["indexes"])
     })
   }
@@ -32,12 +46,14 @@ const Home = () => {
   const parseFile = (ev) => {
     const reader = new FileReader()
     reader.onloadend = (ev) => {
-      const pattern_arr = ev.target.result.split("\r\n");
-      dnaCtx.setText(pattern_arr[0]);
-      dnaCtx.setPattern(pattern_arr[1]);
+      dnaCtx.setText(ev.target.result);
     }
     reader.readAsText(ev.target.files[0]);
   }
+
+  const handleUsername = (event) => dnaCtx.setUsername(event.target.value);
+  const handleDisease = (event) => dnaCtx.setDisease(event.target.value);
+  const handleMethod = (event) => dnaCtx.setMethod(event.target.value);
 
   return (
     <div>
@@ -51,15 +67,25 @@ const Home = () => {
         {/* left side */}
 
         {/* right side */}
-        <Box border="1px" w="50%">
-          buat the main thing 
-          1. masukan file DNA 
-          2. pilih method 
-          3. run, tunggu hasil 3. hasilnya
-          <input type = "file" accept = ".txt" 
+        <Box border="1px" w="50%" px = "5" py = "5">
+          1. Masukkan file berisi string DNA <br/>
+          2. pilih method <br/>
+          3. run, tunggu hasilnya <br/>
+          <Stack spacing = {3}>
+            <Input placeholder = 'Nama Pengguna' size = 'sm' value = {dnaCtx.Username} onChange = {handleUsername}/>
+            <Input placeholder = 'Nama Penyakit' size = 'sm' value = {dnaCtx.Disease} onChange = {handleDisease}/>
+            <RadioGroup value={dnaCtx.Method} onChange={dnaCtx.setMethod} >
+              <Stack direction='row'>
+                <Radio value='BM'>Boyer-Moore</Radio>
+                <Radio value='KMP'>KMP</Radio>
+              </Stack>
+            </RadioGroup>
+            <input type = "file" accept = ".txt" 
             onChange = {(ev) => {
               parseFile(ev)
             }}/>
+          </Stack>
+
           
           {dnaCtx.Text === ""? <></> : !dnaCtx.cleanable ? <div>tidak bisa dibersihkan </div> : <div>bisa dibersihkan. kasih tombol submit</div>}
           <Button
@@ -72,8 +98,10 @@ const Home = () => {
               upload();
             }}
           >
-            Button
+            Check
           </Button>
+
+          <Text fontSize = 'sm'>{dnaCtx.data}</Text>
           {/* show data */}
           {dnaCtx.data && <div>ini data resultnya.yayyayya</div>}
         </Box>

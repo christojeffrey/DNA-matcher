@@ -11,6 +11,22 @@ func max(a, b int) int {
 	return a
 }
 
+func countSimilarities(text string, pattern string) int {
+	count := 0
+	for i := 0; i < len(text)-len(pattern)+1; i++ {
+		temp := 0
+		for j := 0; j < len(pattern); j++ {
+			if text[i+j] == pattern[j] {
+				temp++
+			}
+		}
+		if temp > count {
+			count = temp
+		}
+	}
+	return count
+}
+
 func LCS(text string, pattern string, text_len int, pattern_len int) int {
 	if text_len == 0 || pattern_len == 0 {
 		return 0
@@ -42,6 +58,7 @@ func BMAlgo(text string, pattern string) []int {
 	pattern_len := len(pattern)
 
 	shift := 0
+
 	for shift <= (text_len - pattern_len) {
 		j := pattern_len - 1
 		for j >= 0 && pattern[j] == text[shift+j] {

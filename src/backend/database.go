@@ -45,6 +45,7 @@ func createDB() {
 		nama_pasien VARCHAR(255) NOT NULL,
 		penyakit_prediksi VARCHAR(255) NOT NULL,
 		status INT NOT NULL,
+		kesamaan INT NOT NULL,
 		PRIMARY KEY (idPrediksi)
 	);`)
 
@@ -53,7 +54,7 @@ func createDB() {
 	}
 
 	_, err = db.Exec(`INSERT INTO penyakit (nama, rantai)
-			VALUES ("HIV", "GTA");`)
+			VALUES ("HIV", "TAAGGTA");`)
 	if err != nil {
 		panic(err)
 	}

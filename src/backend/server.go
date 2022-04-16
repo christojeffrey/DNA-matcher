@@ -11,11 +11,12 @@ import (
 )
 
 type Response struct {
-	Time    string `json:"time"`
-	Name    string `json:"name"`
-	Disease string `json:"disease"`
-	Found   bool   `json:"found"`
-	Indexes []int  `json:"indexes"`
+	Time       string `json:"time"`
+	Name       string `json:"name"`
+	Disease    string `json:"disease"`
+	Found      bool   `json:"found"`
+	Similarity int    `json:"similarity"`
+	Indexes    []int  `json:"indexes"`
 }
 
 func match(c echo.Context) error {
@@ -40,6 +41,7 @@ func match(c echo.Context) error {
 	}
 	var result []int
 
+	similarity := int(countSimilarities(text, pattern) * 100 / (len(pattern)))
 	if c.FormValue("method") == "BM" {
 		result = BMAlgo(text, pattern)
 	} else {
@@ -47,17 +49,18 @@ func match(c echo.Context) error {
 	}
 
 	res := &Response{
-		Time:    time.Now().Local().Format("2006-01-02"),
-		Name:    c.FormValue("username"),
-		Disease: c.FormValue("disease"),
-		Found:   len(result) > 0,
-		Indexes: result,
+		Time:       time.Now().Local().Format("2006-01-02"),
+		Name:       c.FormValue("username"),
+		Disease:    c.FormValue("disease"),
+		Found:      similarity >= 80,
+		Similarity: similarity,
+		Indexes:    result,
 	}
 	found := 0
 	if res.Found {
 		found = 1
 	}
-	_, err = db.Exec("INSERT INTO hasil_prediksi (tanggal, nama_pasien, penyakit_prediksi, status) VALUES (?, ?, ?, ?);", res.Time, res.Name, res.Disease, found)
+	_, err = db.Exec("INSERT INTO hasil_prediksi (tanggal, nama_pasien, penyakit_prediksi, status, kesamaan) VALUES (?, ?, ?, ?, ?);", res.Time, res.Name, res.Disease, found, res.Similarity)
 	if err != nil {
 		panic(err)
 	}
@@ -67,17 +70,12 @@ func match(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-// func main() {
-// 	// initialize database
-// 	createDB()
-// 	// initializing, open localhost:3000 to check
-// 	e := echo.New()
-// 	e.POST("/api/match", match)
-
-// 	e.Logger.Fatal(e.Start(":1323"))
-// }
-
 func main() {
-	res := BMAlgo("GXTXAYB", "AGGTAB")
-	fmt.Println(res)
+	// initialize database
+	createDB()
+	// initializing, open localhost:3000 to check
+	e := echo.New()
+	e.POST("/api/match", match)
+
+	e.Logger.Fatal(e.Start(":1323"))
 }
