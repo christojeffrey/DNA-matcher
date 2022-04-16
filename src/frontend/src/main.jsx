@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import { DNAProvider } from "./component/Provider";
 import "./index.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
@@ -15,16 +15,18 @@ import About from "./page/About";
 import NotFound from "./page/NotFound";
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ChakraProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="testing" element={<Testing />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </ChakraProvider>
-    </BrowserRouter>
+    <DNAProvider>
+      <BrowserRouter>
+        <ChakraProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="testing" element={<Testing />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ChakraProvider>
+      </BrowserRouter>
+    </DNAProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

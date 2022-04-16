@@ -7,44 +7,30 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func getUser(c echo.Context) error {
-	id := c.Param("id")
-	return c.String(http.StatusOK, id)
-}
-
-func save(c echo.Context) error {
-	// Get name and email
-	name := c.FormValue("name")
-	email := c.FormValue("email")
-	return c.String(http.StatusOK, "name:"+name+", email:"+email)
+type Response struct {
+	Found   bool  `json:"found"`
+	Indexes []int `json:"indexes"`
 }
 
 func match(c echo.Context) error {
-
-	// fmt.Println(("your mom gay"))~
-	return c.String(http.StatusOK, "Hello, World!")
+	fmt.Println("[REQUEST IN]")
+	text := c.FormValue("text")
+	pattern := c.FormValue("pattern")
+	result := BMAlgo(text, pattern)
+	res := &Response{
+		Found:   len(result) > 0,
+		Indexes: result,
+	}
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
+	c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
+	c.Response().WriteHeader(http.StatusOK)
+	return c.JSON(http.StatusOK, res)
 }
 
 func main() {
-	text := "AABAACAADAABAABA"
-	pattern := "AABA"
-	BM_out := BMAlgo(text, pattern)
-	fmt.Println("Using BM, pattern found", len(BM_out), "times")
-	KMP_algo := KMPAlgo(text, pattern)
-	fmt.Println("Using KMP, pattern found", len(KMP_algo), "times")
+	// initializing, open localhost:3000 to check
+	e := echo.New()
+	e.POST("/api/match", match)
+
+	e.Logger.Fatal(e.Start(":1323"))
 }
-
-// func main() {
-// 	// initializing, open localhost:1323 to check
-// 	e := echo.New()
-// 	e.GET("/", func(c echo.Context) error {
-// 		return c.String(http.StatusOK, "Hello, World!")
-// 	})~
-
-// 	// routing:
-// 	e.GET("/users/:id", getUser)
-// 	e.POST("/save", save)
-// 	e.POST("/match", match)
-
-// 	e.Logger.Fatal(e.Start(":3000"))
-// }
