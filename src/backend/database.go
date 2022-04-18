@@ -52,12 +52,13 @@ func createDB() {
 	if err != nil {
 		panic(err)
 	}
-
+	// INSERT PENYAKIT-PENYAKIT YANG KITA COVER
 	_, err = db.Exec(`INSERT INTO penyakit (nama, rantai)
-			VALUES ("HIV", "TAAGGTA");`)
+	VALUES ("HIV", "TAAGGTA");`)
 	if err != nil {
 		panic(err)
 	}
+	// INSERT PENYAKIT-PENYAKIT YANG KITA COVER
 }
 
 type Penyakit struct {

@@ -45,12 +45,12 @@ const Home = () => {
 
   const handleUsername = (event) => dnaCtx.setUsername(event.target.value);
   const handleDisease = (event) => dnaCtx.setDisease(event.target.value);
-  const handleMethod = (event) => dnaCtx.setMethod(event.target.value);
+  // const handleMethod = (event) => dnaCtx.setMethod(event.target.value);
+  //tambahin check if backend is dead
 
   return (
     <div>
       <Center>Title</Center>
-
       <Box border="1px" px="5" py="5">
         1. Masukkan file berisi string DNA <br />
         2. pilih method <br />
@@ -77,7 +77,7 @@ const Home = () => {
           isLoading={dnaCtx.isLoading}
           colorScheme="teal"
           size="md"
-          isDisabled={dnaCtx.Text === "" || !dnaCtx.cleanable}
+          isDisabled={!dnaCtx.Text || !dnaCtx.cleanable || !dnaCtx.Method || !dnaCtx.Username || !dnaCtx.Disease}
           onClick={() => {
             dnaCtx.setLoading(true);
             upload();
@@ -85,9 +85,14 @@ const Home = () => {
         >
           Check
         </Button>
-        <Text fontSize="sm">{dnaCtx.data}</Text>
         {/* show data */}
-        {dnaCtx.data && <div>ini data resultnya.yayyayya</div>}
+        {dnaCtx.data && (
+          <div>
+            {" "}
+            <Text fontSize="sm">{dnaCtx.data}</Text>
+          </div>
+        )}
+        {/* show data */}
       </Box>
       {/* right side */}
     </div>

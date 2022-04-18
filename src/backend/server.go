@@ -20,6 +20,10 @@ type Response struct {
 }
 
 func match(c echo.Context) error {
+	// if data yg diminta gada, return bad request
+	if c.FormValue("text") == "" || c.FormValue("disease") == ""|| c.FormValue("method") == "" {
+		return c.JSON(http.StatusBadRequest, "text or disease or method is empty")
+	}
 	text := c.FormValue("text")
 	disease := c.FormValue("disease")
 	fmt.Println("[REQUEST IN]", text, disease)
