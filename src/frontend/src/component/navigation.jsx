@@ -4,7 +4,7 @@ const Navigation = () => {
   let location = useLocation().pathname;
   const navbarWidth = "24";
   return (
-    <Flex fontSize="md" fontWeight="medium" textAlign="center" flexDirection="column" p={5} h="100vh" w={navbarWidth} position="fixed" bg="rgba(0,90,99,0.75)" backdropFilter="auto" backdropBlur="3px" boxShadow="navbar">
+    <Flex fontSize="md" fontWeight="medium" textAlign="center" flexDirection="column" p={5} h="100vh" w={navbarWidth} position="fixed" bg="rgba(0,90,99,0.75)" backdropFilter="auto" backdropBlur="3px" boxShadow="navbar" zIndex="1000">
       <Box color={location === "/" ? "teal.light" : "main.100"} _hover={{ color: "teal.light" }} transitionDuration="0.2s">
         <Link to="/">Home</Link>
       </Box>
