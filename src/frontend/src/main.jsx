@@ -45,13 +45,40 @@ const theme = extendTheme({
   },
   fonts: {
     body: "Montserrat, sans-serif",
-    heading: "Georgia, sans-serif",
+    heading: "Montserrat, sans-serif",
     mono: "Menlo, monospace",
+  },
+  styles: {
+    global: {
+      h1: {
+        fontWeight: "700",
+        fontSize: "2.5rem",
+      },
+      h2: {
+        fontWeight: "500",
+        fontSize: "1.5rem",
+      },
+    },
   },
   shadows: {
     navbar: "5px 0px 25px 5px rgba(30, 108, 118, 0.7)",
     md: "10px 10px 0 75px rgba(30, 108, 118, 0.5)",
     xl: "10px 10px 0 250px rgba(30, 108, 118, 0.25)",
+  },
+  components: {
+    Heading: {
+      baseStyle: {
+        fontWeight: 700,
+        color: "teal.dark",
+        "text-shadow": "5px 5px 25px rgba(30, 108, 118, 0.3)",
+      },
+      sizes: {
+        // default size is md
+        xl: {
+          fontSize: "50px",
+        },
+      },
+    },
   },
 })
 
@@ -60,21 +87,23 @@ ReactDOM.render(
     <DNAProvider>
       <BrowserRouter>
         <ChakraProvider theme={theme}>
+          <Box bg="main.100" minH="100vh" w="100%" color="teal.dark">
 
-          {/* NAVBAR */}
-          <Navigation />
+            {/* NAVBAR */}
+            <Navigation />
 
-          {/* CONTENT */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="input" element={<Input />} />
-            <Route path="search" element={<Search />} />
-            <Route path="algo" element={<Algo />} />
-            <Route path="testing" element={<Testing />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            {/* CONTENT */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="input" element={<Input />} />
+              <Route path="search" element={<Search />} />
+              <Route path="algo" element={<Algo />} />
+              <Route path="testing" element={<Testing />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
 
+          </Box>
         </ChakraProvider>
       </BrowserRouter>
     </DNAProvider>

@@ -6,6 +6,15 @@ import axios from "axios";
 import { Box, Center, Flex, Button, Input, Stack, Text, RadioGroup, Radio } from "@chakra-ui/react";
 
 const Home = () => {
+
+  // Change page on scroll
+  window.addEventListener("wheel", function (e) {
+    var delta = e.deltaY;
+    if (delta > 0) {
+      window.location.href = "/input";
+    }
+  });
+
   const dnaCtx = useContext(DNAContext);
 
   useEffect(() => {
