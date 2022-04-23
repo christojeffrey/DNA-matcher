@@ -4,8 +4,23 @@ import {
   Stack,
   Select,
   Input,
-  Button
+  Button,
+  Text,
+  HStack
 } from "@chakra-ui/react";
+
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react'
+
 import { useContext } from "react";
 import { DNAContext } from "../component/Provider";
 import axios from "axios";
@@ -30,7 +45,9 @@ const Search = () => {
       })
       .then((res) => {
         dnaCtx.setLoading(false);
-        console.log(res)
+        console.log(res["data"]["result"])
+        dnaCtx.setSearchRes(res["data"]["result"])
+        console.log(dnaCtx.searchRes)
       });
   };
   return (
@@ -49,7 +66,38 @@ const Search = () => {
             upload();
           }} mt="12">Submit</Button>
         </Stack>
+        <TableContainer>
+          <Table variant = 'simple'>
+            <Thead>
+              <Tr>
+                <Th>ID Prediksi</Th>
+                <Th>Tanggal</Th>
+                <Th>Nama</Th>
+                <Th>Penyakit</Th>
+                <Th>Status</Th>
+                <Th>Kesamaan</Th>
+              </Tr>
+            </Thead>
+            {dnaCtx.searchRes != null && (dnaCtx.searchRes.map((item) => {
+            
+            return(
+              <Tbody>
+                <Tr>
+                  <Th>{item.idprediksi}</Th>
+                  <Th>{item.tanggal}</Th>
+                  <Th>{item.nama_pasien}</Th>
+                  <Th>{item.penyakit_prediksi}</Th>
+                  <Th>{item.status == 1 ? "Terdeteksi" : "Tidak Terdeteksi"}</Th>
+                  <Th>{item.kesamaan}%</Th>
+                </Tr>
+              </Tbody>
+            )
+          }))}
+          </Table>
+          {dnaCtx.searchRes == null && <Text align = "center" justify>No result :(</Text>}
+        </TableContainer>
+
+
       </Box>
-  );
-};
+  )};
 export default Search;

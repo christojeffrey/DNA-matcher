@@ -10,16 +10,14 @@ import { Routes, Route, Link } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
 // import App from "./App";
-import Testing from "./page/Testing";
+
 import Home from "./page/Home";
 import Search from "./page/Search";
-import Algo from "./page/Algo";
 import About from "./page/About";
-import Input from "./page/InputDisease";
-import NotFound from "./page/NotFound";
+
 
 import Navigation from "./component/navigation";
-import { Flex, Box } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 import { extendTheme } from "@chakra-ui/react";
 
@@ -70,7 +68,7 @@ const theme = extendTheme({
       baseStyle: {
         fontWeight: 700,
         color: "teal.dark",
-        "text-shadow": "5px 5px 25px rgba(30, 108, 118, 0.3)",
+        "textShadow": "5px 5px 25px rgba(30, 108, 118, 0.3)",
       },
       sizes: {
         // default size is md
@@ -96,11 +94,11 @@ ReactDOM.render(
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
-              <Route path="input" element={<Input />} />
+              {/* <Route path="input" element={<Input />} /> */}
               <Route path="search" element={<Search />} />
-              <Route path="algo" element={<Algo />} />
-              <Route path="testing" element={<Testing />} />
-              <Route path="*" element={<NotFound />} />
+              {/* <Route path="algo" element={<Algo />} /> */}
+              {/* <Route path="testing" element={<Testing />} />
+              <Route path="*" element={<NotFound />} /> */}
             </Routes>
 
           </Box>

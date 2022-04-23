@@ -1,4 +1,4 @@
 const About = () => {
-  return <div>about</div>;
+  return <div>Among Us</div>;
 };
 export default About;

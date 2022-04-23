@@ -12,7 +12,7 @@ func max(a, b int) int {
 	return a
 }
 
-//Builds the last occurence array for the pattern
+//Builds the last occurence array for the patter
 func buildLast(pattern string) [128]int {
 	last := [128]int{}
 	for i := 0; i < 128; i++ {
@@ -50,7 +50,7 @@ func BMAlgo(text string, pattern string) ([]int, int) {
 			fmt.Println("Pattern found at", shift)
 			out = append(out, shift)
 			max_sim = pattern_len
-
+			fmt.Println((max_sim))
 			if shift+pattern_len < text_len {
 				shift = shift + pattern_len - last[text[shift+pattern_len]]
 			} else {
@@ -59,11 +59,14 @@ func BMAlgo(text string, pattern string) ([]int, int) {
 			// if not found, update maximum similarity value
 			// and change shift value
 		} else {
-			if pattern_len-j > max_sim {
-				max_sim = j
+			if pattern_len - j > max_sim {
+				max_sim = (j)
 			}
+			fmt.Println((max_sim))
 			shift = shift + max(1, j-last[text[shift+j]])
 		}
 	}
+	fmt.Println()
+	fmt.Println(max_sim)
 	return out, max_sim
 }

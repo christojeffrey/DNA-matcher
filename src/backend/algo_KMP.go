@@ -56,6 +56,7 @@ func KMPAlgo(text string, pattern string) ([]int, int) {
 			if j != 0 {
 				if j > max_sim {
 					max_sim = j
+					fmt.Println((max_sim))
 				}
 				j = failure[j-1]
 			} else {
