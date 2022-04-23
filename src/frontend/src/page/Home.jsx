@@ -1,7 +1,7 @@
 import { DNAContext } from "../component/Provider";
 import { canBeCleaned } from "../util/sanitize";
 import { useEffect, useContext } from "react";
-import Navigation from "../component/navigation";
+
 import axios from "axios";
 import { Box, Center, Flex, Button, Input, Stack, Text, RadioGroup, Radio } from "@chakra-ui/react";
 

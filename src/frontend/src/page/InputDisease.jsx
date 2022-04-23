@@ -1,46 +1,94 @@
-import { Box, Flex, Heading, Text, Input, Center, Code, Button } from "@chakra-ui/react";
+import { 
+  Box, 
+  Radio, 
+  RadioGroup,
+  Heading, 
+  Text, Input, 
+  Center, 
+  Code, 
+  Button, 
+  Stack,
+  Select } from "@chakra-ui/react";
 import { FileUploader } from "react-drag-drop-files";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
+import { DNAContext } from "../component/Provider";
+import axios from "axios";
 
 const InputDisease = () => {
-  // Change page on scroll
-  var scrollable = true;
-  useEffect(() => {
-    const handleScroll = (e) => {
-      var delta = e.deltaY;
-      if (scrollable) {
-        if (delta > 0) {
-          window.location.href = "/search";
-        } else {
-          window.location.href = "/";
-        }
-      }
-    };
-    window.addEventListener("wheel", handleScroll);
 
-    // on unmount
-    return () => window.removeEventListener("wheel", handleScroll);
-  }, []);    
+  const dnaCtx = useContext(DNAContext);
+  // // Change page on scroll
+  // var scrollable = true;
+  // useEffect(() => {
+  //   const handleScroll = (e) => {
+  //     var delta = e.deltaY;
+  //     if (scrollable) {
+  //       if (delta > 0) {
+  //         window.location.href = "/search";
+  //       } else {
+  //         window.location.href = "/";
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener("wheel", handleScroll);
+
+  //   // on unmount
+  //   return () => window.removeEventListener("wheel", handleScroll);
+  // }, []);    
 
   // Drag and drop DNA sequence file
   const fileTypes = ["TXT"];
   const [file, setFile] = useState(null);
   const [text, setText] = useState("");
   const handleChange = (file) => {
-    scrollable = false;
+    // scrollable = false;
     setFile(file);
     document.getElementById("dName").value = file.name.slice(0,-4);
     var fr = new FileReader();
     fr.readAsText(file);
     fr.onload = function () {
       setText(fr.result);
+      dnaCtx.setText(fr.result);
     }
   };
 
+  const upload = () => {
+    const data = new FormData();
+    data.append("username", dnaCtx.Username);
+    data.append("disease", dnaCtx.Disease);
+    data.append("text", dnaCtx.Text);
+    data.append("method", dnaCtx.Method);
+    console.log(data)
+    axios
+      .post("http://localhost:1323/api/match", data, {
+        responseType: "json",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        dnaCtx.setLoading(false);
+        if (res["status"] == 200){
+
+          console.log(res["data"]);
+          var response = res["data"];
+          dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + response["found"] + " - " + response["similarity"] + "%");
+          console.log("Pattern found at: ", res["data"]["indexes"]);
+          dnaCtx.setText("");
+        }
+        else if (res["status"] == 400){
+          alert("Please input the correct name, method, and di")
+        }
+      });
+  };
+
+  const handleUsername = (event) => dnaCtx.setUsername(event.target.value);
+  const handleDisease = (event) => dnaCtx.setDisease(event.target.value);
+  
   return (
     <>
       {/* CONTENT */}
-      <Box p={24} pl={48} w="100%" position="relative" >
+      <Box p={24} pl={48} w="100%" position="relative" align = "center">
         <Heading>Input New Disease</Heading>
         <Text as="h2" mt="12">DNA sequence</Text>
         <FileUploader
@@ -65,12 +113,35 @@ const InputDisease = () => {
           </Box>
         </FileUploader>
         
-        <Flex mt="12" w="100%">
-          <Text as="h2" w="60">Disease name</Text>
-          <Input w="100%" id="dName" bg="teal.dark" color="main.100" placeholder="Input disease name" />
-        </Flex>
+        <Stack mt="12" w="60%">
+          <Text as="h2" w="60">Username</Text>
+          <Input w="100%" id="dName" bg="teal.dark" color="main.100" placeholder="Input username" value = {dnaCtx.Username} onChange = {handleUsername} />
+          <Text as="h2" w="60">Disease</Text>
+          
+          <Select bg="teal.dark" color="main.100"  placeholder = 'Select disease' value = {dnaCtx.Disease} onChange = {handleDisease}>
+            <option style={{ color: 'black' }} value = 'HIV'>HIV</option>
+            <option style={{ color: 'black' }} value = "Alzheimer's">Alzheimer's</option>
+            <option style={{ color: 'black' }} value = "Parkinson's">Parkinson's</option>
+          </Select>
+          <RadioGroup value={dnaCtx.Method} onChange={dnaCtx.setMethod}>
+            <Stack direction="row">
+              <Radio value="BM">Boyer-Moore</Radio>
+              <Radio value="KMP">KMP</Radio>
+            </Stack>
+          </RadioGroup>
+        </Stack>
 
-        <Button mt="12">Submit</Button>
+        <Button onClick={() => {
+            dnaCtx.setLoading(true);
+            upload();
+          }} mt="12">Submit</Button>
+
+        {dnaCtx.data && (
+          <div>
+            {" "}
+            <Text fontSize="xl" py = "3">{dnaCtx.data}</Text>
+          </div>
+        )}
       </Box>
     </>
   );

@@ -1,5 +1,6 @@
 package main
 
+// Boyer-Moore algorithm implementation
 import (
 	"fmt"
 )
@@ -11,33 +12,7 @@ func max(a, b int) int {
 	return a
 }
 
-func countSimilarities(text string, pattern string) int {
-	count := 0
-	for i := 0; i < len(text)-len(pattern)+1; i++ {
-		temp := 0
-		for j := 0; j < len(pattern); j++ {
-			if text[i+j] == pattern[j] {
-				temp++
-			}
-		}
-		if temp > count {
-			count = temp
-		}
-	}
-	return count
-}
-
-func LCS(text string, pattern string, text_len int, pattern_len int) int {
-	if text_len == 0 || pattern_len == 0 {
-		return 0
-	}
-	if text[text_len-1] == pattern[pattern_len-1] {
-		return 1 + LCS(text, pattern, text_len-1, pattern_len-1)
-	} else {
-		return max(LCS(text, pattern, text_len-1, pattern_len), LCS(text, pattern, text_len, pattern_len-1))
-	}
-}
-
+//Builds the last occurence array for the pattern
 func buildLast(pattern string) [128]int {
 	last := [128]int{}
 	for i := 0; i < 128; i++ {
@@ -49,32 +24,46 @@ func buildLast(pattern string) [128]int {
 	return last
 }
 
-func BMAlgo(text string, pattern string) []int {
+// Base algorithm to be used
+func BMAlgo(text string, pattern string) ([]int, int) {
+	// Initializes output array and last occurence array
 	out := make([]int, 0)
 	last := buildLast(pattern)
-	fmt.Println("Text: ", text)
-	fmt.Println("Pattern: ", pattern)
+
 	text_len := len(text)
 	pattern_len := len(pattern)
-
 	shift := 0
+	max_sim := 0
 
 	for shift <= (text_len - pattern_len) {
 		j := pattern_len - 1
+		// searches pattern backwards, decrement j
+		// until either j < 0 or the characters aren't equal
 		for j >= 0 && pattern[j] == text[shift+j] {
 			j--
 		}
+
+		// if j less than 0 (pattern found), then
+		// update maximum similarity value to pattern length (found)
+		// and change shift value
 		if j < 0 {
 			fmt.Println("Pattern found at", shift)
 			out = append(out, shift)
+			max_sim = pattern_len
+
 			if shift+pattern_len < text_len {
 				shift = shift + pattern_len - last[text[shift+pattern_len]]
 			} else {
 				shift++
 			}
+			// if not found, update maximum similarity value
+			// and change shift value
 		} else {
+			if pattern_len-j > max_sim {
+				max_sim = j
+			}
 			shift = shift + max(1, j-last[text[shift+j]])
 		}
 	}
-	return out
+	return out, max_sim
 }

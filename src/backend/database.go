@@ -54,7 +54,7 @@ func createDB() {
 	}
 	// INSERT PENYAKIT-PENYAKIT YANG KITA COVER
 	_, err = db.Exec(`INSERT INTO penyakit (nama, rantai)
-	VALUES ("HIV", "TAAGGTA");`)
+	VALUES ("HIV", "TAAGGTA"), ("Alzheimer's", "GCTCT"), ("Parkinson's", "GGTCAG");`)
 	if err != nil {
 		panic(err)
 	}
