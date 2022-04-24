@@ -15,6 +15,7 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(200, "Hello, World!")
 	})
+	
 	e.GET("/alldiseases", getAllDiseases)
 
 	e.POST("/api/match", match)

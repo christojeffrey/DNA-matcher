@@ -23,6 +23,7 @@ func match(c echo.Context) error {
 	if c.FormValue("text") == "" || c.FormValue("disease") == "" || c.FormValue("method") == "" {
 		return c.JSON(http.StatusBadRequest, "text or disease or method is empty")
 	}
+	//olah data
 	text := c.FormValue("text")
 	disease := c.FormValue("disease")
 	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
