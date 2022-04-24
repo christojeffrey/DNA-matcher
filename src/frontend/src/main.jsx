@@ -12,6 +12,7 @@ import { BrowserRouter } from "react-router-dom";
 // import App from "./App";
 
 import Home from "./page/Home";
+import Input from "./page/InputDisease";
 import Search from "./page/Search";
 import About from "./page/About";
 
@@ -94,7 +95,7 @@ ReactDOM.render(
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
-              {/* <Route path="input" element={<Input />} /> */}
+              <Route path="input" element={<Input />} />
               <Route path="search" element={<Search />} />
               {/* <Route path="algo" element={<Algo />} /> */}
               {/* <Route path="testing" element={<Testing />} />
