@@ -10,9 +10,9 @@ export const DNAContext = createContext({
     data: null, setData: null,
     file: null, setFile: null,
     error: null, setError: null,
-    searchType: null, setSearchType: null,
     searchData: null, setSearchData: null,
-    searchRes: null, setSearchRes: null
+    searchRes: null, setSearchRes: null,
+    diseaseList: null, setDiseaseList: null
 });
 
 export function DNAProvider({ children }){
@@ -25,9 +25,9 @@ export function DNAProvider({ children }){
     const [file, setFile] = useState(null)
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
-    const [searchType, setSearchType] = useState(null)
     const [searchData, setSearchData] = useState(null)
     const [searchRes, setSearchRes] = useState(null)
+    const [diseaseList, setDiseaseList] = useState(null)
 
     return (
         <DNAContext.Provider
@@ -41,9 +41,9 @@ export function DNAProvider({ children }){
                 file, setFile,
                 data, setData,
                 error, setError,
-                searchType, setSearchType,
                 searchData, setSearchData,
-                searchRes, setSearchRes }}>
+                searchRes, setSearchRes,
+                diseaseList, setDiseaseList }}>
             {children}
         </DNAContext.Provider>
     )

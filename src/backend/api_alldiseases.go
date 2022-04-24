@@ -9,8 +9,9 @@ import (
 )
 
 type Disease struct {
-	Name       string `json:"name"`
+	Name []string `json:"name"`
 }
+
 func getAllDiseases(c echo.Context) error {
 
 	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
@@ -25,7 +26,7 @@ func getAllDiseases(c echo.Context) error {
 	}
 	var data []string
 
-	searchQuery := fmt.Sprintf("SELECT nama FROM penyakit;")
+	searchQuery := "SELECT nama FROM penyakit;"
 	fmt.Println((searchQuery))
 	rows, err := db.Query(searchQuery)
 	if err != nil {
@@ -42,5 +43,11 @@ func getAllDiseases(c echo.Context) error {
 		data = append(data, name)
 	}
 	fmt.Println(data)
-	return c.JSON(http.StatusOK, data)
+	res := &Disease{
+		Name: data,
+	}
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
+	c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
+	c.Response().WriteHeader(http.StatusOK)
+	return c.JSON(http.StatusOK, res)
 }
