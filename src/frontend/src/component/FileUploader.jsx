@@ -1,7 +1,6 @@
 import { FileUploader } from "react-drag-drop-files";
 import { Box, Text, Center, Code } from "@chakra-ui/react";
 import { useState } from "react";
-import { clean } from "../util/sanitize";
 
 const FileUploaderComponent = () => {
   const fileTypes = ["TXT"];
@@ -15,7 +14,7 @@ const FileUploaderComponent = () => {
     fr.readAsText(file);
     // clean(fr.result);
     fr.onload = function () {
-      setText(clean(fr.result));
+      setText(fr.result);
     }
   };
   return (

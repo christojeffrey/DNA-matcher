@@ -2,22 +2,17 @@ import {
   Box, 
   Heading,
   Stack,
-  Select,
   Input,
   Button,
   Text,
-  HStack
 } from "@chakra-ui/react";
 
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
 } from '@chakra-ui/react'
 
@@ -27,12 +22,10 @@ import axios from "axios";
 
 const Search = () => {
   const dnaCtx = useContext(DNAContext);
-  const handleSearchType = (event) => dnaCtx.setSearchType(event.target.value);
   const handleSearchData = (event) => dnaCtx.setSearchData(event.target.value);
 
   const upload = () => {
     const data = new FormData();
-    data.append("type", dnaCtx.searchType);
     data.append("data", dnaCtx.searchData);
 
     console.log(data)
@@ -48,6 +41,8 @@ const Search = () => {
         console.log(res["data"]["result"])
         dnaCtx.setSearchRes(res["data"]["result"])
         console.log(dnaCtx.searchRes)
+      }).catch(() => {
+        console.log("Please make sure the query is filled!")
       });
   };
   return (
@@ -55,12 +50,7 @@ const Search = () => {
         <Heading>Search History</Heading>
         
         <Stack direction = "row" justify = "center" py = "10">
-          <Select w = "35%" bg="teal.dark" color="main.100"  placeholder = 'Select type...' value = {dnaCtx.searchType} onChange = {handleSearchType}>
-            <option style={{ color: 'black' }} value = 'nama_pasien'>Name</option>
-            <option style={{ color: 'black' }} value = "tanggal">Date</option>
-            <option style={{ color: 'black' }} value = "penyakit_prediksi">Disease</option>
-          </Select>
-          <Input px = "5" w="35%" id="dName" bg="teal.dark" color="main.100" placeholder="Input data..." value = {dnaCtx.searchData} onChange = {handleSearchData} />
+          <Input px = "5" w="50%" id="dName" bg="teal.dark" color="main.100" placeholder="Input data..." value = {dnaCtx.searchData} onChange = {handleSearchData} />
           <Button onClick={() => {
             dnaCtx.setLoading(true);
             upload();
@@ -94,7 +84,7 @@ const Search = () => {
             )
           }))}
           </Table>
-          {dnaCtx.searchRes == null && <Text align = "center" justify>No result :(</Text>}
+          {dnaCtx.searchRes == null && <Text align = "center" py = "10">No result :(</Text>}
         </TableContainer>
 
 

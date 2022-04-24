@@ -10,7 +10,7 @@ import {
   Stack,
   Select } from "@chakra-ui/react";
 import { FileUploader } from "react-drag-drop-files";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DNAContext } from "../component/Provider";
 import axios from "axios";
 
@@ -36,6 +36,20 @@ const Home = () => {
   //   return () => window.removeEventListener("wheel", handleScroll);
   // }, []);    
 
+  useEffect(() => {
+    axios.get("http://localhost:1323/api/alldiseases", {
+          responseType: "json",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+      .then((res) => {
+        console.log(res)
+        dnaCtx.setDiseaseList(res["data"]["name"])
+
+      });
+  }, [])
+
   // Drag and drop DNA sequence file
   const fileTypes = ["TXT"];
   const [file, setFile] = useState(null);
@@ -52,14 +66,14 @@ const Home = () => {
     }
   };
 
-  const upload = () => {
+  const uploadRecord = () => {
     const data = new FormData();
     console.log(dnaCtx.Text, dnaCtx.Username, dnaCtx.Disease, dnaCtx.Method)
     if (dnaCtx.Text == null || dnaCtx.Username == null || dnaCtx.Disease == null || dnaCtx.Method == null){
       alert("Please make sure all data is inserted!")
     }
     else{
-      dnaCtx.setText(dnaCtx.Text.toUpperCase().replace(/[^ATGC]/g, ""));
+      dnaCtx.setText(dnaCtx.Text);
       data.append("username", dnaCtx.Username);
       data.append("disease", dnaCtx.Disease);
       data.append("text", dnaCtx.Text);
@@ -73,15 +87,14 @@ const Home = () => {
         })
         .then((res) => {
           dnaCtx.setLoading(false);
-          if (res["status"] == 200){
-            console.log(res["data"]);
-            var response = res["data"];
-            dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + (response["found"] ? "Terdeteksi" : "Tidak Terdeteksi") + " - " + response["similarity"] + "%");
-            console.log("Pattern found at: ", res["data"]["indexes"]);
-          }
-          else if (res["status"] == 400){
-            alert("Please input the correct name, method, and text!")
-          }
+          console.log(res)
+          console.log(res["data"]);
+          var response = res["data"];
+          dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + (response["found"] ? "Terdeteksi" : "Tidak Terdeteksi") + " - " + response["similarity"] + "%");
+          console.log("Pattern found at: ", res["data"]["indexes"]);
+        }).catch(() => {
+          alert("Please make sure your text is valid! (no spaces or characters beside character A, C, G, T)")
+          dnaCtx.setData(null)
         });
     }
 
@@ -124,9 +137,13 @@ const Home = () => {
           <Text as="h2" w="60">Disease</Text>
           
           <Select bg="teal.dark" color="main.100"  placeholder = 'Select disease' value = {dnaCtx.Disease} onChange = {handleDisease}>
-            <option style={{ color: 'black' }} value = 'HIV'>HIV</option>
+            {/* <option style={{ color: 'black' }} value = 'HIV'>HIV</option>
             <option style={{ color: 'black' }} value = "Alzheimer's">Alzheimer's</option>
-            <option style={{ color: 'black' }} value = "Parkinson's">Parkinson's</option>
+            <option style={{ color: 'black' }} value = "Parkinson's">Parkinson's</option> */}
+            {dnaCtx.diseaseList != null && dnaCtx.diseaseList.map((disease) => {
+              return(
+                  <option style={{ color: 'black' }} value = {disease}>{disease}</option>
+              )})}
           </Select>
           <RadioGroup value={dnaCtx.Method} onChange={dnaCtx.setMethod}>
             <Stack direction="row">
@@ -138,7 +155,7 @@ const Home = () => {
 
         <Button onClick={() => {
             dnaCtx.setLoading(true);
-            upload();
+            uploadRecord();
           }} mt="12">Submit</Button>
 
         {dnaCtx.data && (

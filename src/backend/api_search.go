@@ -22,7 +22,11 @@ type SearchData struct {
 }
 
 func search(c echo.Context) error {
-	searchType := c.FormValue("type")
+	// if data yg diminta gada, return bad request
+	if c.FormValue("data") == "" {
+		return c.JSON(http.StatusBadRequest, "query text is empty")
+	}
+	// olah data
 	searchData := c.FormValue("data")
 
 	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
@@ -37,7 +41,9 @@ func search(c echo.Context) error {
 	}
 	var data []SearchData
 
-	searchQuery := fmt.Sprintf("SELECT * FROM hasil_prediksi WHERE %s = \"%s\"", searchType, searchData)
+	tanggal, validPenyakit := parseSearch(searchData)
+	
+	searchQuery := fmt.Sprintf("SELECT * FROM hasil_prediksi WHERE tanggal = '"+tanggal+"' OR penyakit_prediksi = '"+validPenyakit+"';")
 	fmt.Println((searchQuery))
 	rows, err := db.Query(searchQuery)
 	if err != nil {
@@ -52,7 +58,7 @@ func search(c echo.Context) error {
 		}
 		data = append(data, tempdata)
 	}
-	fmt.Println(data)
+
 	res := &SearchRes{
 		Result: data,
 	}
