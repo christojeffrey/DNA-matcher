@@ -8,9 +8,9 @@ const Navigation = () => {
       <Box color={location === "/" ? "teal.light" : "main.100"} _hover={{ color: "teal.light" }} transitionDuration="0.2s">
         <Link to="/">Home</Link>
       </Box>
-      {/* <Box color={location === "/input" ? "teal.light" : "main.100"} _hover={{ color: "teal.light" }} transitionDuration="0.2s">
+      <Box color={location === "/input" ? "teal.light" : "main.100"} _hover={{ color: "teal.light" }} transitionDuration="0.2s">
         <Link to="/input">Input</Link>
-      </Box> */}
+      </Box>
       <Box color={location === "/search" ? "teal.light" : "main.100"} _hover={{ color: "teal.light" }} transitionDuration="0.2s">
         <Link to="/search">Search</Link>
       </Box>
