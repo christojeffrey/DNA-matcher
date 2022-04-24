@@ -1,7 +1,8 @@
 import { Box, Flex, Heading, Text, Input, Center, Code, Button } from "@chakra-ui/react";
-import { FileUploader } from "react-drag-drop-files";
+import FileUploader from "../component/FileUploader";
 import { useState } from "react";
 import axios from "axios";
+
 const InputDisease = () => {
   // Change page on scroll
   // var scrollable = true;
@@ -21,6 +22,7 @@ const InputDisease = () => {
   //   // on unmount
   //   return () => window.removeEventListener("wheel", handleScroll);
   // }, []);    
+  const dnaCtx = useContext(DNAContext);
 
   const upload = () => {
     const data = new FormData();
