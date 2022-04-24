@@ -1,5 +1,4 @@
-import { Box, Radio, RadioGroup, Heading, Text, Input, Center, Code, Button, Stack, Select } from "@chakra-ui/react";
-import { FileUploader } from "react-drag-drop-files";
+import { Box, Radio, RadioGroup, Heading, Text, Input, Center, Code, Button, Stack, Select, SlideFade, useDisclosure } from "@chakra-ui/react";
 import { useState, useContext, useEffect } from "react";
 import { DNAContext } from "../component/Provider";
 import axios from "axios";
@@ -8,6 +7,7 @@ import DNAFileUploaderComponent from "../component/FileUploader";
 
 const Home = () => {
   const dnaCtx = useContext(DNAContext);
+  const { isOpen, onOpen } = useDisclosure();
   // // Change page on scroll
   // var scrollable = true;
   // useEffect(() => {
@@ -28,6 +28,8 @@ const Home = () => {
   // }, []);
 
   useEffect(() => {
+    document.title = "Predict Disease";
+    onOpen();
     axios
       .get(BE_URL + "api/alldiseases", {
         responseType: "json",
@@ -84,61 +86,63 @@ const Home = () => {
   return (
     <>
       {/* CONTENT */}
-      <Center>
-        <Box p={24} pl={48} w="80%" position="relative" align="center">
-          <Heading>Predict Disease</Heading>
-          <Text as="h2" mt="12">
-            DNA sequence
-          </Text>
-          <DNAFileUploaderComponent setDNA={dnaCtx.setText} setTitle={dnaCtx.setUsername} />
-
-          <Stack mt="12" w="100%">
-            <Text as="h2" w="60">
-              Username
+      <SlideFade in={isOpen}>
+        <Center>
+          <Box p={24} pl={48} w="80%" position="relative" align="center">
+            <Heading>Predict Disease</Heading>
+            <Text as="h2" mt="12">
+              DNA sequence
             </Text>
-            <Input w="100%" id="dName" bg="teal.dark" color="main.100" placeholder="Input username" value={dnaCtx.Username} onChange={handleUsername} />
-            <Text as="h2" w="60">
-              Disease
-            </Text>
+            <DNAFileUploaderComponent setDNA={dnaCtx.setText} setTitle={dnaCtx.setUsername} />
 
-            <Select bg="teal.dark" color="main.100" placeholder="Select disease" value={dnaCtx.Disease} onChange={handleDisease}>
-              {dnaCtx.diseaseList != null &&
-                dnaCtx.diseaseList.map((disease, idx) => {
-                  return (
-                    <option key={idx} style={{ color: "black" }} value={disease}>
-                      {disease}
-                    </option>
-                  );
-                })}
-            </Select>
-            <RadioGroup value={dnaCtx.Method} onChange={dnaCtx.setMethod}>
-              <Stack direction="row">
-                <Radio value="BM">Boyer-Moore</Radio>
-                <Radio value="KMP">KMP</Radio>
-              </Stack>
-            </RadioGroup>
-          </Stack>
-
-          <Button
-            onClick={() => {
-              dnaCtx.setLoading(true);
-              uploadRecord();
-            }}
-            mt="12"
-          >
-            Submit
-          </Button>
-
-          {dnaCtx.data && (
-            <div>
-              {" "}
-              <Text fontSize="xl" py="3">
-                {dnaCtx.data}
+            <Stack mt="12" w="100%">
+              <Text as="h2" w="60">
+                Username
               </Text>
-            </div>
-          )}
-        </Box>
-      </Center>
+              <Input w="100%" id="dName" bg="teal.dark" color="main.100" placeholder="Input username" value={dnaCtx.Username} onChange={handleUsername} />
+              <Text as="h2" w="60">
+                Disease
+              </Text>
+
+              <Select bg="teal.dark" color="main.100" placeholder="Select disease" value={dnaCtx.Disease} onChange={handleDisease}>
+                {dnaCtx.diseaseList != null &&
+                  dnaCtx.diseaseList.map((disease, idx) => {
+                    return (
+                      <option key={idx} style={{ color: "black" }} value={disease}>
+                        {disease}
+                      </option>
+                    );
+                  })}
+              </Select>
+              <RadioGroup value={dnaCtx.Method} onChange={dnaCtx.setMethod}>
+                <Stack direction="row">
+                  <Radio value="BM">Boyer-Moore</Radio>
+                  <Radio value="KMP">KMP</Radio>
+                </Stack>
+              </RadioGroup>
+            </Stack>
+
+            <Button
+              onClick={() => {
+                dnaCtx.setLoading(true);
+                uploadRecord();
+              }}
+              mt="12"
+            >
+              Submit
+            </Button>
+
+            {dnaCtx.data && (
+              <div>
+                {" "}
+                <Text fontSize="xl" py="3">
+                  {dnaCtx.data}
+                </Text>
+              </div>
+            )}
+          </Box>
+        </Center>
+      </SlideFade>
     </>
   );
 };

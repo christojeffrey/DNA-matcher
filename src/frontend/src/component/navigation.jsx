@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { Box, Flex, Icon } from "@chakra-ui/react";
+import { Box, Flex, Icon, Switch } from "@chakra-ui/react";
 import { IoHome, IoSearch, IoCode, IoInformationCircle, IoAddCircle } from "react-icons/io5";
-const Navigation = () => {
+import { useEffect } from "react";
+const Navigation = ({ setSecondaryTheme }) => {
   let location = useLocation().pathname;
   const navbarWidth = "24";
   return (
@@ -36,6 +37,15 @@ const Navigation = () => {
           About
         </Link>
       </Box>
+      <Switch
+        size="lg"
+        onChange={(e) => {
+          console.log(e.target.checked);
+          console.log("switch is clicked");
+          setSecondaryTheme(e.target.checked);
+        }}
+        colorScheme="green"
+      />
     </Flex>
   );
 };
