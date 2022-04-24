@@ -15,7 +15,6 @@ func parseSearch(text string) (string, string) {
 
 	fmt.Println("cleaned")
 	fmt.Println(text)
-
 	// var regextanggal, _ = regexp.Compile(`\d{2}\-\d{2}\-\d{4}`)
 	var regextanggalkata, _ = regexp.Compile(`(?i)\d{1,2} (januari|februari|Maret|April|mei|juni|july|agustus|september|oktober|november|desember|january|february|march|may|june|july|august|october|december) \d{4}`)
 	var regexpenyakitkotor, _ = regexp.Compile(`[^(0-9)]+`)
@@ -50,7 +49,6 @@ func parseSearch(text string) (string, string) {
 	// formating tanggal
 	if tanggal != "" {
 		// ubah jadi bentuk "2021-04-18" dari "22 April 2020"
-
 		var index = strings.Index(tanggal, " ")
 		var dd = tanggal[:index]
 		fmt.Println("dd")
