@@ -29,6 +29,7 @@ const Search = () => {
         dnaCtx.setLoading(false);
         console.log(res["data"]["result"]);
         dnaCtx.setSearchRes(res["data"]["result"]);
+        console.log("dnaCtx.searchRes");
         console.log(dnaCtx.searchRes);
       })
       .catch(() => {
