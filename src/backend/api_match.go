@@ -30,7 +30,7 @@ func match(c echo.Context) error {
 		//olah data
 		text := c.FormValue("text")
 		disease := c.FormValue("disease")
-		db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
+		db, err := sql.Open("mysql", databaseReference)
 		if err != nil {
 			panic(err)
 		}
