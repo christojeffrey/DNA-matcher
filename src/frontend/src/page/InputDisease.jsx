@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Text, Input, Center, Code, Button } from "@chakra-ui/react";
 import FileUploader from "../component/FileUploader";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 
 const InputDisease = () => {
   // Change page on scroll
@@ -21,6 +21,7 @@ const InputDisease = () => {
   //   // on unmount
   //   return () => window.removeEventListener("wheel", handleScroll);
   // }, []);    
+  const dnaCtx = useContext(DNAContext);
 
   return (
     <Box p={24} pl={48} w="100%" position="relative" >
