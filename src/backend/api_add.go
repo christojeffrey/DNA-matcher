@@ -10,7 +10,7 @@ import (
 )
 
 func add(c echo.Context) error {
-	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
+	db, err := sql.Open("mysql", databaseReference)
 	if err != nil {
 		panic(err)
 	}

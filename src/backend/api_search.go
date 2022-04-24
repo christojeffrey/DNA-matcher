@@ -29,7 +29,7 @@ func search(c echo.Context) error {
 	// olah data
 	searchData := c.FormValue("data")
 
-	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/")
+	db, err := sql.Open("mysql", databaseReference)
 	if err != nil {
 		panic(err)
 	}
