@@ -9,13 +9,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
-// import App from "./App";
-
 import Home from "./page/Home";
-import Input from "./page/InputDisease";
+import InputDisease from "./page/InputDisease";
 import Search from "./page/Search";
 import About from "./page/About";
-
 
 import Navigation from "./component/navigation";
 import { Box } from "@chakra-ui/react";
@@ -69,7 +66,7 @@ const theme = extendTheme({
       baseStyle: {
         fontWeight: 700,
         color: "teal.dark",
-        "textShadow": "5px 5px 25px rgba(30, 108, 118, 0.3)",
+        textShadow: "5px 5px 25px rgba(30, 108, 118, 0.3)",
       },
       sizes: {
         // default size is md
@@ -79,7 +76,7 @@ const theme = extendTheme({
       },
     },
   },
-})
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -87,7 +84,6 @@ ReactDOM.render(
       <BrowserRouter>
         <ChakraProvider theme={theme}>
           <Box bg="main.100" minH="100vh" w="100%" color="teal.dark">
-
             {/* NAVBAR */}
             <Navigation />
 
@@ -95,13 +91,12 @@ ReactDOM.render(
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
-              <Route path="input" element={<Input />} />
+              <Route path="input" element={<InputDisease />} />
               <Route path="search" element={<Search />} />
               {/* <Route path="algo" element={<Algo />} /> */}
               {/* <Route path="testing" element={<Testing />} />
               <Route path="*" element={<NotFound />} /> */}
             </Routes>
-
           </Box>
         </ChakraProvider>
       </BrowserRouter>
