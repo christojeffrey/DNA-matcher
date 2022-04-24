@@ -24,6 +24,8 @@ const Search = () => {
         },
       })
       .then((res) => {
+        console.log("data yg dikirim");
+        console.log(data);
         dnaCtx.setLoading(false);
         console.log(res["data"]["result"]);
         dnaCtx.setSearchRes(res["data"]["result"]);

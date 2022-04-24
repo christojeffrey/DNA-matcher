@@ -70,7 +70,7 @@ func parseSearch(text string) (string, string) {
 	}
 	fmt.Println("tanggal:", resTanggal)
 	fmt.Println("penyakit:", resPenyakit)
-	return tanggal, resPenyakit
+	return resTanggal, resPenyakit
 }
 
 func bulanToNumber(bulan string) string {

@@ -10,6 +10,11 @@ import (
 )
 
 func add(c echo.Context) error {
+	// if name dan data yg diminta gada, return bad request
+	if c.FormValue("name") == "" || c.FormValue("data") == "" {
+		return c.JSON(http.StatusBadRequest, "name or data is empty")
+	}
+	// olah data
 	db, err := sql.Open("mysql", databaseReference)
 	if err != nil {
 		panic(err)
@@ -23,9 +28,10 @@ func add(c echo.Context) error {
 	r, _ := regexp.Compile(`^[CAGT]+$`)
 	fmt.Println("SELECT COUNT(*) FROM penyakit WHERE nama = '" + c.FormValue("name") + "' OR rantai = '" + c.FormValue("data") + "');")
 	var count int
-	_ = db.QueryRow("SELECT COUNT(*) FROM penyakit WHERE nama = '" + c.FormValue("name") + "' OR rantai = '" + c.FormValue("data") + "');").Scan(&count)
-
-	if !r.MatchString(c.FormValue("data")) && count != 0 {
+	_ = db.QueryRow("SELECT COUNT(*) FROM penyakit WHERE nama = '" + c.FormValue("name") + "' OR rantai = '" + c.FormValue("data") + "';").Scan(&count)
+	fmt.Println("count")
+	fmt.Println(count)
+	if !r.MatchString(c.FormValue("data")) || count != 0 {
 		c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
 		c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
 		c.Response().WriteHeader(http.StatusBadRequest)

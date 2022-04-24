@@ -40,10 +40,22 @@ func search(c echo.Context) error {
 		panic(err)
 	}
 	var data []SearchData
+	var resTanggal string
+	var resPenyakit string
+	resTanggal, resPenyakit = parseSearch(searchData)
+	var query string = "SELECT * FROM hasil_prediksi WHERE"
+	if resTanggal != "" {
+		query += " tanggal = '" + resTanggal + "'"
+	}
+	if resTanggal != "" && resPenyakit != "" {
+		query += " OR "
+	}
+	if resPenyakit != "" {
+		query += " penyakit_prediksi = '" + resPenyakit + "'"
+	}
+	query += ";"
 
-	tanggal, validPenyakit := parseSearch(searchData)
-	
-	searchQuery := fmt.Sprintf("SELECT * FROM hasil_prediksi WHERE tanggal = '"+tanggal+"' OR penyakit_prediksi = '"+validPenyakit+"';")
+	searchQuery := fmt.Sprintf(query)
 	fmt.Println((searchQuery))
 	rows, err := db.Query(searchQuery)
 	if err != nil {
