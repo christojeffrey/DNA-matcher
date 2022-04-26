@@ -1,9 +1,6 @@
 package main
 
 // KMP algorithm implementation
-import (
-	"fmt"
-)
 
 // calculate mismatch position array
 func computeFailure(pattern string) []int {
@@ -29,8 +26,7 @@ func computeFailure(pattern string) []int {
 }
 
 // base algorithm to be used
-func KMPAlgo(text string, pattern string) ([]int, int) {
-	out := make([]int, 0)
+func KMPAlgo(text string, pattern string) (int) {
 	failure := computeFailure(pattern)
 	max_sim := 0
 
@@ -43,11 +39,8 @@ func KMPAlgo(text string, pattern string) ([]int, int) {
 			j++
 			i++
 			if j == len(pattern) {
-				fmt.Println("Pattern found at", i-j)
-				out = append(out, i-j)
 				max_sim = len(pattern)
-				j = failure[j-1]
-
+				break
 			}
 			// if found a condition where the characters don't match,
 			// update j value to the value of the mismatch position
@@ -62,5 +55,5 @@ func KMPAlgo(text string, pattern string) ([]int, int) {
 			}
 		}
 	}
-	return out, max_sim
+	return max_sim
 }

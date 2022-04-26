@@ -15,7 +15,6 @@ type Response struct {
 	Disease    string `json:"disease"`
 	Found      bool   `json:"found"`
 	Similarity int    `json:"similarity"`
-	Indexes    []int  `json:"indexes"`
 }
 
 func match(c echo.Context) error {
@@ -46,12 +45,12 @@ func match(c echo.Context) error {
 		if err := db.QueryRow("SELECT rantai FROM penyakit WHERE nama = ?", disease).Scan(&pattern); err != nil {
 			panic(err)
 		}
-		var result []int
+
 		var max_sim int
 		if c.FormValue("method") == "BM" {
-			result, max_sim = BMAlgo(text, pattern)
+			max_sim = BMAlgo(text, pattern)
 		} else {
-			result, max_sim = KMPAlgo(text, pattern)
+			max_sim = KMPAlgo(text, pattern)
 		}
 
 		percentage := int(float64(float64(max_sim)/float64(len(pattern))) * 100)
@@ -62,7 +61,6 @@ func match(c echo.Context) error {
 			Disease:    c.FormValue("disease"),
 			Found:      percentage >= 80,
 			Similarity: percentage,
-			Indexes:    result,
 		}
 		found := 0
 		if res.Found {

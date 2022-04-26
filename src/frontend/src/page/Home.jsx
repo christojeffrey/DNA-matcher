@@ -70,7 +70,6 @@ const Home = () => {
           console.log(res["data"]);
           var response = res["data"];
           dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + (response["found"] ? "Terdeteksi" : "Tidak Terdeteksi") + " - " + response["similarity"] + "%");
-          console.log("Pattern found at: ", res["data"]["indexes"]);
         })
         .catch((err) => {
           console.log(err);
