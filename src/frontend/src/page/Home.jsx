@@ -31,7 +31,7 @@ const Home = () => {
   // }, []);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); }
 
   useEffect(() => {
     document.title = "Deoxyde";
@@ -44,7 +44,6 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         dnaCtx.setDiseaseList(res["data"]["name"]);
       });
   }, []);
@@ -53,7 +52,7 @@ const Home = () => {
 
   const uploadRecord = () => {
     const data = new FormData();
-    console.log(dnaCtx.Text, dnaCtx.Username, dnaCtx.Disease, dnaCtx.Method);
+  
     if (dnaCtx.Text == "" || dnaCtx.Username == "" || dnaCtx.Disease == "" || dnaCtx.Method == "") {
       alert("Please make sure all data is inserted!");
     } else {
@@ -61,8 +60,8 @@ const Home = () => {
       data.append("username", dnaCtx.Username);
       data.append("disease", dnaCtx.Disease);
       data.append("text", dnaCtx.Text);
+      console.log(dnaCtx.Method);
       data.append("method", dnaCtx.Method);
-      console.log(data);
       axios
         .post(BE_URL + "api/match", data, {
           responseType: "json",
@@ -71,14 +70,12 @@ const Home = () => {
           },
         })
         .then((res) => {
-          dnaCtx.setLoading(false);
           console.log(res);
-          console.log(res["data"]);
+          dnaCtx.setLoading(false);
           var response = res["data"];
           dnaCtx.setData(response["time"] + " - " + response["name"] + " - " + response["disease"] + " - " + (response["found"] ? "Terdeteksi" : "Tidak Terdeteksi") + " - " + response["similarity"] + "%");
         })
         .catch((err) => {
-          console.log(err);
           alert("Please make sure your text is valid! (no spaces or characters beside character A, C, G, T)");
           dnaCtx.setData(null);
         });

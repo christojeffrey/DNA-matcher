@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 	"regexp"
 	"time"
@@ -48,10 +49,13 @@ func match(c echo.Context) error {
 
 		var max_sim int
 		if c.FormValue("method") == "BM" {
+			fmt.Println("BM")
 			max_sim = BMAlgo(text, pattern)
 		} else {
+			fmt.Println("KMP")
 			max_sim = KMPAlgo(text, pattern)
 		}
+		fmt.Println(max_sim)
 
 		percentage := int(float64(float64(max_sim)/float64(len(pattern))) * 100)
 

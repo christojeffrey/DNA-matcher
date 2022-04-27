@@ -14,7 +14,7 @@ const InputDisease = () => {
   const [inputtedData, setInputtedData] = useState("");
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); }
   // const [motion, setMotion] = useState(true);
 
   // useEffect(() => {
@@ -29,7 +29,6 @@ const InputDisease = () => {
 
   const upload = () => {
     const data = new FormData();
-    console.log(inputtedName, inputtedData);
     if (inputtedName == "" || inputtedData == "") {
       alert("Please make sure all data is inserted!");
     } else if (inputtedData.length > 255){
@@ -37,7 +36,6 @@ const InputDisease = () => {
     } else {
       data.append("name", inputtedName);
       data.append("data", inputtedData);
-      console.log(data);
       axios
         .put(BE_URL + "api/add", data, {
           responseType: "json",

@@ -18,8 +18,6 @@ const DNAFileUploaderComponent = ({ setDNA, setTitle }) => {
         fr.readAsText(file);
         fr.onload = function () {
           setText(fr.result);
-          console.log("dna");
-          console.log(fr.result);
           setDNA(fr.result);
         };
       }}

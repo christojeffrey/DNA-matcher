@@ -40,8 +40,6 @@ const Navigation = ({ setSecondaryTheme }) => {
       <Switch
         size="lg"
         onChange={(e) => {
-          console.log(e.target.checked);
-          console.log("switch is clicked");
           setSecondaryTheme(e.target.checked);
         }}
         colorScheme="green"

@@ -9,7 +9,7 @@ const About = () => {
 
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); }
   // const [motion, setMotion] = useState(true);
 
   // useEffect(() => {

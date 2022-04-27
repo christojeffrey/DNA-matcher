@@ -15,7 +15,7 @@ const Search = () => {
   const { isOpen, onOpen } = useDisclosure();
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); }
 
   useEffect(() => {
     onOpen();
@@ -23,8 +23,6 @@ const Search = () => {
   const upload = () => {
     const data = new FormData();
     data.append("data", dnaCtx.searchData);
-
-    console.log(data);
     axios
       .post(BE_URL + "api/search", data, {
         responseType: "json",
@@ -33,13 +31,9 @@ const Search = () => {
         },
       })
       .then((res) => {
-        console.log("data yg dikirim");
-        console.log(data);
         dnaCtx.setLoading(false);
-        console.log(res["data"]["result"]);
+
         dnaCtx.setSearchRes(res["data"]["result"]);
-        console.log("dnaCtx.searchRes");
-        console.log(dnaCtx.searchRes);
       })
       .catch(() => {
         console.log("Please make sure the query is filled!");

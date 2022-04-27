@@ -2,8 +2,8 @@ package main
 
 // Boyer-Moore algorithm implementation
 
-func min(a, b int) int {
-	if a > b {
+func max(a, b int) int {
+	if a < b {
 		return b
 	}
 	return a
@@ -21,7 +21,13 @@ func buildLast(pattern string) [128]int {
 	return last
 }
 
-// Base algorithm to be used
+func min(a, b int) int {
+	if a > b {
+		return b
+	}
+	return a
+}
+
 func BMAlgo(text string, pattern string) int {
 	// Initializes output array and last occurence array
 
@@ -30,13 +36,16 @@ func BMAlgo(text string, pattern string) int {
 	pattern_len := len(pattern)
 	max_sim := 0
 
-	if pattern_len > text_len {
+	i := pattern_len - 1
+
+	if i > text_len-1 {
 		return max_sim
 	}
-	i := pattern_len - 1
+
 	j := pattern_len - 1
 
-	for i <= text_len-1 {
+	for {
+		// keeps searching for pattern
 		if pattern[j] == text[i] {
 			if j == 0 {
 				return pattern_len
@@ -47,9 +56,15 @@ func BMAlgo(text string, pattern string) int {
 		} else {
 			lastOcc := last[text[i]]
 			i = i + pattern_len - min(j, 1+lastOcc)
-			max_sim = j
+			if (pattern_len - j) > max_sim {
+				max_sim = j
+			}
+
 			j = pattern_len - 1
 
+		}
+		if i > text_len-1 {
+			break
 		}
 	}
 	return max_sim
