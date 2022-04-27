@@ -38,7 +38,7 @@ const Search = () => {
       });
   };
   return (
-    <SlideFade in={isOpen}>
+    <SlideFade in={isOpen} color="main.100">
       <Center>
         <Box p={24} pl={48} w="80%" position="relative" align="center">
           <Heading>Search History</Heading>
@@ -51,6 +51,7 @@ const Search = () => {
                 upload();
               }}
               mt="12"
+              bg="accent" color="main.100" _hover={{bg:"teal.light", color:"teal.dark"}}
             >
               Submit
             </Button>
@@ -59,12 +60,12 @@ const Search = () => {
             <Table variant="simple">
               <Thead>
                 <Tr>
-                  <Th>ID Prediksi</Th>
-                  <Th>Tanggal</Th>
-                  <Th>Nama</Th>
-                  <Th>Penyakit</Th>
-                  <Th>Status</Th>
-                  <Th>Kesamaan</Th>
+                  <Th color="teal.mid" fontSize="md">ID Prediksi</Th>
+                  <Th color="teal.mid" fontSize="md">Tanggal</Th>
+                  <Th color="teal.mid" fontSize="md">Nama</Th>
+                  <Th color="teal.mid" fontSize="md">Penyakit</Th>
+                  <Th color="teal.mid" fontSize="md">Status</Th>
+                  <Th color="teal.mid" fontSize="md">Kesamaan</Th>
                 </Tr>
               </Thead>
               {dnaCtx.searchRes != null &&
@@ -72,12 +73,12 @@ const Search = () => {
                   return (
                     <Tbody>
                       <Tr>
-                        <Th>{item.idprediksi}</Th>
-                        <Th>{item.tanggal}</Th>
-                        <Th>{item.nama_pasien}</Th>
-                        <Th>{item.penyakit_prediksi}</Th>
-                        <Th>{item.status == 1 ? "Terdeteksi" : "Tidak Terdeteksi"}</Th>
-                        <Th>{item.kesamaan}%</Th>
+                        <Th color="teal.dark">{item.idprediksi}</Th>
+                        <Th color="teal.dark">{item.tanggal}</Th>
+                        <Th color="teal.dark">{item.nama_pasien}</Th>
+                        <Th color="teal.dark">{item.penyakit_prediksi}</Th>
+                        <Th color="teal.dark">{item.status == 1 ? "Terdeteksi" : "Tidak Terdeteksi"}</Th>
+                        <Th color="teal.dark">{item.kesamaan}%</Th>
                       </Tr>
                     </Tbody>
                   );

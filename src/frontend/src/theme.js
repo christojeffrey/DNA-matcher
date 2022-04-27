@@ -54,6 +54,7 @@ export const defaultTheme = extendTheme({
       light: "#87E4DA",
     },
     accent: "#E76859",
+    navbar: "rgba(0,90,99,0.75)",
   },
   fonts: {
     body: "Montserrat, sans-serif",
@@ -97,22 +98,23 @@ export const defaultTheme = extendTheme({
 export const secondaryTheme = extendTheme({
   colors: {
     main: {
-      100: "#FAFCFB",
-      200: "#F5F9FA",
-      300: "#F0F6F6",
-      400: "#EAF3F2",
-      500: "#E4EEEF",
-      600: "#C1D9DB",
-      700: "#9BBDC2",
-      800: "#71A2A7",
-      900: "#1E6C76",
+      100: "#1E6C76",
+      200: "#71A2A7",
+      300: "#71A2A7",
+      400: "#71A2A7",
+      500: "#71A2A7",
+      600: "#EAF3F2",
+      700: "#F0F6F6",
+      800: "#F5F9FA",
+      900: "#FAFCFB",
     },
     teal: {
-      dark: "#18191A",
+      dark: "#87E4DA",
       mid: "#00ABB2",
-      light: "#87E4DA",
+      light: "#005A63",
     },
     accent: "#E76859",
+    navbar: "rgba(135,228,218,0.75)",
   },
   fonts: {
     body: "Montserrat, sans-serif",
