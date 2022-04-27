@@ -93,7 +93,7 @@ const Home = () => {
       {/* CONTENT */}
       <SlideFade in={isOpen} position="relative" zIndex="10">
         <Center>
-        <Box position="absolute" w="100%" h="133vh" objectFit="cover" overflow="hidden">
+        <Box position="absolute" w="100%" h="100vh" top="0" objectFit="cover" overflow="hidden">
           {/* <Switch
             size="lg"
             onChange={(e) => {
@@ -149,6 +149,7 @@ const Home = () => {
                 uploadRecord();
               }}
               mt="12"
+              bg="accent" color="main.100" _hover={{bg:"teal.light", color:"teal.dark"}}
             >
               Submit
             </Button>

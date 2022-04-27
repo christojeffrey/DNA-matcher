@@ -48,7 +48,7 @@ const Search = () => {
   return (
     <SlideFade in={isOpen} position="relative" zIndex="10">
       <Center>
-      <Box position="absolute" w="100%" h="133vh" objectFit="cover" overflow="hidden">
+      <Box position="absolute" w="100%" h="100vh" top="0" objectFit="cover" overflow="hidden">
           {/* <Switch
             size="lg"
             onChange={(e) => {
