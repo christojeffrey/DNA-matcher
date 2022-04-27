@@ -28,7 +28,7 @@ const Home = () => {
   // }, []);
 
   useEffect(() => {
-    document.title = "Predict Disease";
+    document.title = "Deoxyde";
     onOpen();
     axios
       .get(BE_URL + "api/alldiseases", {
@@ -88,7 +88,7 @@ const Home = () => {
       <SlideFade in={isOpen}>
         <Center>
           <Box p={24} pl={48} w="80%" position="relative" align="center">
-            <Heading>Predict Disease</Heading>
+            <Heading>Deoxyde</Heading>
             <Text as="h2" mt="12">
               DNA sequence
             </Text>
