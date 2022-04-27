@@ -14,8 +14,40 @@ const About = () => {
       {/* CONTENT */}
       <SlideFade in={isOpen}>
         <Center>
-          <Box p={24} pl={48} w="80%" position="relative" align="center">
+          <Box p={24} pl={48} w="80%" position="relative">
             <Heading>About</Heading>
+            <Box m="1rem">
+              hello!
+              <ol>
+                <li>
+                  so what is this website? <br />
+                  this site is a website that can help you to detect diesease that you might have.
+                </li>
+                <li>
+                  how does it works? <br />
+                  the idea is if your DNA has a 'disease pattern' in it, quite certainly you have that disease. it works by checking the pattern in your DNA, and matching it with the 'DNA disease pattern' we have.
+                </li>
+                <li>
+                  who made this? <br />
+                  this site was made by
+                  <a href="https://github.com/FelineJTD/"> Felicia Sutandijo</a>, <a href="https://github.com/christojeffrey">Christopher Jeffrey</a>, and
+                  <a href="https://github.com/clumsyyyy"> Owen Christian Wijaya</a>
+                </li>
+                <li>
+                  what do you use to make this site? we use <br />
+                  <a href="https://chakra-ui.com/">chakra-ui</a> and <a href="https://reactjs.org/">react</a> for frontend and <a href="https://www.npmjs.com/package/axios">axios</a> for backend. for deploying, we use{" "}
+                  <a href="https://www.netlify.com/">netlify</a> and <a href="https://cloud.google.com/compute">google cloud engine</a>.
+                </li>
+                <li>
+                  is it real? <br />
+                  no it's not. the DNA disease pattern that we have is not real. the concept of DNA pattern maching maybe real, but that is a very dubious answer that we give.
+                </li>
+                <li>
+                  where can i see the code of this site? <br />
+                  you can see the code of this site on <a href="https://github.com/clumsyyyy/Tubes3_13520050">github</a>
+                </li>
+              </ol>
+            </Box>
           </Box>
         </Center>
       </SlideFade>
