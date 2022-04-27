@@ -17,6 +17,8 @@ const InputDisease = () => {
     console.log(inputtedName, inputtedData);
     if (inputtedName == "" || inputtedData == "") {
       alert("Please make sure all data is inserted!");
+    } else if (inputtedData.length > 255){
+      alert("Please make sure DNA string length is less than 255!")
     } else {
       data.append("name", inputtedName);
       data.append("data", inputtedData);
