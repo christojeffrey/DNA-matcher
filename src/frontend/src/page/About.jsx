@@ -9,13 +9,14 @@ const About = () => {
 
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  const [motion, setMotion] = useState(true);
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  // const [motion, setMotion] = useState(true);
 
-  useEffect(() => {
-    if (motion) {
-      onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
-    }
-  }, [motion]);
+  // useEffect(() => {
+  //   if (motion) {
+  //     onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  //   }
+  // }, [motion]);
 
   useEffect(() => {
     document.title = "About";
@@ -29,7 +30,7 @@ const About = () => {
       {/* CONTENT */}
       <SlideFade in={isOpen}>
         <Center>
-        <Box position="absolute" w="100%" h="133vh" objectFit="cover" overflow="hidden">
+        <Box position="absolute" w="100%" h="100vh" objectFit="cover" overflow="hidden">
           {/* <Switch
             size="lg"
             onChange={(e) => {
@@ -55,7 +56,7 @@ const About = () => {
                   this site is a website that can help you to detect diesease that you might have.
                 </li>
                 <li>
-                  how does it works? <br />
+                  how does it work? <br />
                   the idea is if your DNA has a 'disease pattern' in it, quite certainly you have that disease. it works by checking the pattern in your DNA, and matching it with the 'DNA disease pattern' we have.
                 </li>
                 <li>

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Input, Center, Code, Button, SlideFade, useDisclosure, Image, Spacer, Switch } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Input, Center, Button, SlideFade, useDisclosure, Image, Spacer } from "@chakra-ui/react";
 import DNAFileUploaderComponent from "../component/FileUploader";
 import { useState, useContext, useEffect } from "react";
 import { DNAContext } from "../component/Provider";
@@ -14,13 +14,14 @@ const InputDisease = () => {
   const [inputtedData, setInputtedData] = useState("");
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  const [motion, setMotion] = useState(true);
+  onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  // const [motion, setMotion] = useState(true);
 
-  useEffect(() => {
-    if (motion) {
-      onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
-    }
-  }, [motion]);
+  // useEffect(() => {
+  //   if (motion) {
+  //     onmousemove = function(e) { setMouseX(e.clientX/window.innerWidth); setMouseY(e.clientY/window.innerHeight); console.log(mouseX); }
+  //   }
+  // }, [motion]);
 
   useEffect(() => {
     onOpen();
@@ -60,7 +61,7 @@ const InputDisease = () => {
   return (
     <SlideFade in={isOpen} position="relative" zIndex="10">
       <Center>
-        <Box position="absolute" w="100%" h="133vh" objectFit="cover" overflow="hidden">
+        <Box position="absolute" w="100%" h="100vh" objectFit="cover" overflow="hidden">
           {/* <Switch
             size="lg"
             onChange={(e) => {
