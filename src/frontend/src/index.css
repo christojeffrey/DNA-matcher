@@ -30,3 +30,22 @@ h2 {
   font-size: 2rem;
   margin: 0;
 }
+
+html,
+body {
+  scrollbar-color: #00ABB2 #87E4DA;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #87E4DA;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #00ABB2;
+}
