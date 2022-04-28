@@ -78,7 +78,7 @@ func bulanToNumber(bulan string) string {
 	var regexjanuari, _ = regexp.Compile(`(?i)(januari|january)`)
 	var regexfebruari, _ = regexp.Compile(`(?i)(februari|february)`)
 	var regexmaret, _ = regexp.Compile(`(?i)(maret|march)`)
-	var regexapril, _ = regexp.Compile(`(?i)(april|may)`)
+	var regexapril, _ = regexp.Compile(`(?i)(april|april)`)
 	var regexmei, _ = regexp.Compile(`(?i)(mei|may)`)
 	var regexjuni, _ = regexp.Compile(`(?i)(juni|june)`)
 	var regexjuli, _ = regexp.Compile(`(?i)(juli|july)`)
