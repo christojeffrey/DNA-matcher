@@ -31,13 +31,11 @@ dengan kolom pencarian untuk membantu admin dalam melakukan filtering dan pencar
 
 _Deoxyde_ adalah sebuah _website_ yang dapat digunakan untuk mendeteksi sebuah penyakit dalam seseorang dengan mencocokkan rantai DNA seseorang dengan rantai DNA yang menentukan sebuah penyakit. Pengguna dapat mengunggah plainteks berisi rantai DNA dan program akan melakukan pencocokan dengan rantai tersebut. Program akan melakukan validasi rantai DNA yang dimasukkan menggunakan _RegEx_. Selain itu, pengguna dapat menambahkan penyakit baru ke dalam _database_ dan melihat hasil prediksi sebelumnya.
 
-
-
 ## Requirements
 Untuk pengujian di _local_:
 - <a href = "https://nodejs.org/en/download/"> _Node Package Manager_ `(npm)`</a>
 - <a href = "https://go.dev/doc/install"> _Go Compiler 1.18_ </a>
-- <a href = "https://www.apachefriends.org/download.html" _XAMPP Control Panel_ untuk server lokal (jika diperlukan)</a>
+- <a href = "https://www.apachefriends.org/download.html"> _XAMPP Control Panel_ untuk server lokal (jika diperlukan) </a>
 Untuk pengujian _online_ dapat dilakukan di **<a href = "https://deoxyde.netlify.all/">https://deoxyde.netlify.app/</a>**
 
 ## Kompilasi
