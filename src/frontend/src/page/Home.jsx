@@ -60,7 +60,7 @@ const Home = () => {
       data.append("username", dnaCtx.Username);
       data.append("disease", dnaCtx.Disease);
       data.append("text", dnaCtx.Text);
-      console.log(dnaCtx.Method);
+      console.log(dnaCtx.Disease);
       data.append("method", dnaCtx.Method);
       axios
         .post(BE_URL + "api/match", data, {

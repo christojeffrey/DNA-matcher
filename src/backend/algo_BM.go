@@ -56,8 +56,8 @@ func BMAlgo(text string, pattern string) int {
 		} else {
 			lastOcc := last[text[i]]
 			i = i + pattern_len - min(j, 1+lastOcc)
-			if (pattern_len - j) > max_sim {
-				max_sim = j
+			if (pattern_len - j - 1) > max_sim {
+				max_sim = pattern_len - j - 1
 			}
 
 			j = pattern_len - 1

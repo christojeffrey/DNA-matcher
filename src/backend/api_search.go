@@ -48,7 +48,7 @@ func search(c echo.Context) error {
 		query += " tanggal = '" + resTanggal + "'"
 	}
 	if resTanggal != "" && resPenyakit != "" {
-		query += " OR "
+		query += " AND "
 	}
 	if resPenyakit != "" {
 		query += " penyakit_prediksi = \"" + resPenyakit + "\""

@@ -7,20 +7,22 @@ const DNAFileUploaderComponent = ({ setDNA, setTitle }) => {
   const [file, setFile] = useState(null);
   const [text, setText] = useState("");
 
+  const handleChange = (file) => {
+    setFile(file);
+    console.log(file)
+    // document.getElementById("dName").value = file.name.slice(0, -4);
+    setTitle(file.name.slice(0, -4));
+    const fr = new FileReader();
+    fr.readAsText(file);
+    fr.onload = function () {
+      setText(fr.result);
+      setDNA(fr.result);
+    };
+  }
   return (
     <FileUploader
       multiple={false}
-      handleChange={(file) => {
-        setFile(file);
-        // document.getElementById("dName").value = file.name.slice(0, -4);
-        setTitle(file.name.slice(0, -4));
-        var fr = new FileReader();
-        fr.readAsText(file);
-        fr.onload = function () {
-          setText(fr.result);
-          setDNA(fr.result);
-        };
-      }}
+      handleChange={handleChange}
       name="dnaSequence"
       types={fileTypes}
     >
