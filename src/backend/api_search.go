@@ -51,7 +51,7 @@ func search(c echo.Context) error {
 		query += " AND "
 	}
 	if resPenyakit != "" {
-		query += " penyakit_prediksi = \"" + resPenyakit + "\""
+		query += " penyakit_prediksi LIKE '%" + resPenyakit + "%'"
 	}
 	query += ";"
 
