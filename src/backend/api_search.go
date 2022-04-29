@@ -54,10 +54,8 @@ func search(c echo.Context) error {
 		query += " penyakit_prediksi LIKE '%" + resPenyakit + "%'"
 	}
 	query += ";"
-
-	searchQuery := fmt.Sprintf(query)
-	fmt.Println((searchQuery))
-	rows, err := db.Query(searchQuery)
+	fmt.Println(query)
+	rows, err := db.Query(query)
 	if err != nil {
 		panic(err)
 	}
