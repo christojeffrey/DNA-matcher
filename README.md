@@ -49,7 +49,12 @@ Untuk pengujian _deployment_, tidak perlu melakukan kompilasi dan dapat dilakuka
 1. Dari folder _root_, navigasi ke folder `backend` `cd src/backend`
 2. Pada file `config.go`, ubah variabel `databaseReference` menjadi format akses database _MySql_ dengan format string `{USERNAME}:{PASSWORD}@tcp({SERVER MYSQL LOKAL})` atau `{USERNAME}@tcp({SERVER MYSQL LOKAL)}`
 > Server MySQL lokal biasanya berupa localhost:3306
-3. Jalankan perintah untuk kompilasi _backend_:
+3. Jalankan perintah berikut untuk melakukan instalasi modules yang dibutuhkan:
+```go
+go mod init // inisialisasi file go.mod
+go mod tidy // akan membuat berkas go.sum berisi dependency
+```
+4. Jalankan perintah untuk kompilasi _backend_:
 ```go
 go run .
 ```
